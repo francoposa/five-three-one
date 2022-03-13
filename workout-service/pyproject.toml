@@ -6,8 +6,10 @@ authors = []
 
 [tool.poetry.dependencies]
 python = "^3.8"
+asyncpg = "0.25.*"
 fastapi = {version = "0.74.*", extras = ["all"]}
-fastapi-users = {extras = ["sqlalchemy2"], version = "^9.2.5"}
+fastapi-users = {extras = ["sqlalchemy2"], version = "9.*"}
+
 
 [tool.poetry.dev-dependencies]
 # Linters and Formatters should always float to the next version without restriction
