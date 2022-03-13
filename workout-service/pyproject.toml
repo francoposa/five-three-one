@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "workout-service"
+version = "0.1.0a0"
+description = ""
+authors = []
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = {version = "0.74.*", extras = ["all"]}
+fastapi-users = {extras = ["sqlalchemy2"], version = "^9.2.5"}
+
+[tool.poetry.dev-dependencies]
+# Linters and Formatters should always float to the next version without restriction
+black = "*"
+flake8 = "*"
+ipython = "*"
+isort = "*"
+mypy = "*"
+pylint = "*"
+# Testing tools should probably float to the next version;
+# if it breaks, get compatible with the new version
+pytest = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pylint.messages_control]
+disable = [
+    "no-member", # pylint is not great at this, produces false positives. let mypy bother with it
+    "no-self-argument",  # false positives on Pydantic validators
+    "too-few-public-methods",  # do not care to enforce
+    "missing-module-docstring",  # do not care to enforce
+]
