@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "workout-service"
+name = "workout-service/api"
 version = "0.1.0a0"
 description = ""
 authors = []
@@ -9,6 +9,11 @@ python = "^3.8"
 asyncpg = "0.25.*"
 fastapi = {version = "0.74.*", extras = ["all"]}
 fastapi-users = {extras = ["sqlalchemy2"], version = "9.*"}
+
+alembic = "1.*"
+# psycopg2 is only used for alembic migrations
+# for asyncpg but we would have to write a wrapper
+psycopg2 = "2.*"
 
 
 [tool.poetry.dev-dependencies]
