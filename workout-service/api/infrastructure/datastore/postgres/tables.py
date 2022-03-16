@@ -12,7 +12,7 @@ from api.infrastructure.user_aggregate.user_repo import UserDB
 DB_METADATA = sa.MetaData()
 User_DB_Declarative_Meta: DeclarativeMeta = declarative_base(metadata=DB_METADATA)
 
-DATABASE_URL = "postgresql+asyncpg://postgres@localhost:5432/531_user"
+DATABASE_URL = "postgresql+asyncpg://postgres@localhost:5432/five_three_one"
 engine = create_async_engine(DATABASE_URL)
 async_session_maker = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
