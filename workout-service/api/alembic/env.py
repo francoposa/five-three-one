@@ -1,12 +1,13 @@
 from logging.config import fileConfig
-
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from os import getenv
 
 from alembic import context
+from sqlalchemy import engine_from_config, pool
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
+from api.infrastructure.datastore.postgres.tables import DB_METADATA
+
 config = context.config
 
 # Interpret the config file for Python logging.
@@ -18,12 +19,20 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+target_metadata = DB_METADATA
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+pg_host = getenv("POSTGRES_HOST", default="localhost")
+pg_port = getenv("POSTGRES_PORT", default=5432)
+pg_user = getenv("POSTGRES_USER", default="postgres")
+pg_password = getenv("POSTGRES_PASSWORD", default="postgres")
+pg_database = getenv("POSTGRES_DB", "five_three_one")
+
+pg_url = f"postgresql://{pg_user}:{pg_password}@{pg_host}:{pg_port}/{pg_database}"
+config.set_main_option("sqlalchemy.url", pg_url)
 
 
 def run_migrations_offline():
@@ -64,9 +73,7 @@ def run_migrations_online():
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()
